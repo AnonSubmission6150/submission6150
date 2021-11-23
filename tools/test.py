@@ -20,6 +20,10 @@ def parse_args():
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(
         '--aug-test', action='store_true', help='Use Flip and Multi scale aug')
+    parser.add_argument(
+        '--down-test', action='store_true', help='Use Flip and Multi scale aug')
+    parser.add_argument(
+        '--scale-ratio', type=float, help='Use Singe test with a speficy ratio')
     parser.add_argument('--out', help='output result file in pickle format')
     parser.add_argument(
         '--format-only',
@@ -59,7 +63,7 @@ def parse_args():
     parser.add_argument(
         '--opacity',
         type=float,
-        default=0.5,
+        default=1.,
         help='Opacity of painted segmentation map. In (0, 1] range.')
     parser.add_argument('--local_rank', type=int, default=0)
     args = parser.parse_args()
@@ -94,7 +98,15 @@ def main():
         cfg.data.test.pipeline[1].img_ratios = [
             0.5, 0.75, 1.0, 1.25, 1.5, 1.75
         ]
+        cfg.data.test.pipeline[1].img_ratios = [
+            1.0,
+        ]
         cfg.data.test.pipeline[1].flip = True
+    if args.down_test:
+        cfg.data.test.pipeline[1].img_ratios = [
+            args.scale_ratio, 
+        ]
+        cfg.data.test.pipeline[1].flip = False
     cfg.model.pretrained = None
     cfg.data.test.test_mode = True
 

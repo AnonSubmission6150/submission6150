@@ -2,7 +2,7 @@ import os
 import os.path as osp
 from collections import OrderedDict
 from functools import reduce
-
+import torch
 import mmcv
 import numpy as np
 from mmcv.utils import print_log

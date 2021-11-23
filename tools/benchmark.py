@@ -15,8 +15,13 @@ def parse_args():
     parser.add_argument('config', help='test config file path')
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument(
+        '--scale-test', action='store_true', help='Use Flip and Multi scale aug')
+    parser.add_argument(
+        '--scale-ratio', type=float, help='Use Singe test with a speficy ratio')
+    parser.add_argument(
         '--log-interval', type=int, default=50, help='interval of logging')
     args = parser.parse_args()
+
     return args
 
 
@@ -26,6 +31,14 @@ def main():
     cfg = Config.fromfile(args.config)
     # set cudnn_benchmark
     torch.backends.cudnn.benchmark = False
+
+    if args.scale_test:
+        cfg.data.test.pipeline[1].img_ratios = [
+            args.scale_ratio, 
+        ]
+        cfg.data.test.pipeline[1].flip = False
+
+
     cfg.model.pretrained = None
     cfg.data.test.test_mode = True
 
