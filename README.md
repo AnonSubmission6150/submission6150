@@ -1,4 +1,6 @@
-# Train
+Note: Contributors appeared in this page all come from the original mmsegmentation repository.
+
+## Train
 DeepGlobe
 ```
 ./tools/dist_train_isdnet.sh configs/isdnet/isdnet_1224x1224_80k_deepglobe.py 4
@@ -11,14 +13,14 @@ Cityscapes
 ```
 ./tools/dist_train_isdnet.sh configs/isdnet/isdnet_512x512_160k_cityscpaes.py 8
 ```
-# Inference
+## Inference
 ```
 python tools/test.py config_file checkpoints_file --eval mIoU
 ```
-# FPS test
+## FPS test
 ```
 python tools/fps_test.py config_file --h height of the test image --w width of the test image
 ```
-# Install
+## Installation
 Our code is based on mmsegmentation (version 0.16.0), you should install this before runing.
-The install instructions can refer to mmsegmentation. 
+The install instructions can refer to the original mmsegmentation codebase. 
